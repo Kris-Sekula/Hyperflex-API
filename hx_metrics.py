@@ -28,7 +28,7 @@ app = Flask('HX Stats')
 def get_stats():
 	results =''
 	for host in hx_creds.hosts:
-		# get auth talken (either cached or new one)
+		# get auth token (either cached or new one)
 		authdata = get_auth(host['host'], host['username'], host['password'])
 	        
 		url = "https://"+host['host']
