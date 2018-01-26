@@ -18,8 +18,12 @@ the hx_creds.py looks like this:
 hosts=[{'host':'10.1.1.1', 'username':'local/root', 'password':'*******'},{'host':'10.1.1.2', 'username':'local/root', 'password':'****'}]
 
 '''
+#
+server_IP ='10.100.253.13'
+server_port = '8082'
+
 # Logging config
-logFile="hx_stats.log"
+logFile="hx_stats_%s_%s.log"%(server_IP,server_port)
 logCount=4
 logBytes=1048576
 
@@ -134,7 +138,7 @@ def get_auth(host, username, password):
                                 return tokens.get(host)
                 	logger.error("Failed to validate existing token "+response.content)        	
 		except Exception as e:
-			logger.error("Post for token validate failed "+e)
+			logger.error("Post for token validate failed \n"+str(e))
 	
 	# this happens if no cached token found, or existing token was invalid
 	url = 'https://%s/aaa/v1/auth?grant_type=password'%host
@@ -156,7 +160,7 @@ def get_auth(host, username, password):
 		logger.error("Failed get a token "+response.content)
 		return None
 	except Exception as e:
-		logger.error("Post for token get failed "+e)
+		logger.error("Post for token get failed \n"+str(e))
 		return None
 
 #
@@ -173,7 +177,7 @@ def get_stats(authdata, url):
 		logger.error("Failed to get data "+response.content)
 		return None
 	except Exception as e:
-                logger.error("Post for data failed "+e)
+                logger.error("Post for data failed \n"+str(e))
                 return None
 
 def date_txt(epoch):
@@ -191,6 +195,5 @@ if __name__ == '__main__':
 	logger.info("-"*25)
     	logger.info("HX Stats script started")
 	
-	http_server = WSGIServer(('10.100.253.13', 8083), app, log = logger)
+	http_server = WSGIServer((server_IP, int(server_port)), app, log = logger)
 	http_server.serve_forever()
-		
