@@ -1,6 +1,6 @@
 # Hyperflex-API
 
-This is an example of how to use Cisco Hyperflex API with python. I've been tasked with deploying multiple Hyperflex Cluster at Cisco Live 2018 in Barcelona. As part of that deployment I wanted to have a way to monitor performace of the system. The Hyperflex system has a built performace "screen" that can be accessed via the http://hx-controller/perf link but I wanted to have both of my systems data presented on one screen. 
+This is an example of how to use Cisco Hyperflex API with python. I've been tasked with deploying multiple Hyperflex Clusters at Cisco Live 2018 in Barcelona. As part of that deployment I wanted to have a way to monitor performace of the system. The Hyperflex system has a built performace "screen" that can be accessed via the http://hx-controller/perf link but I wanted to have both of my systems data presented on one screen. 
 
 I decided to use the "Prometheus" https://prometheus.io/ as backend, Grafana as frontend and a python script to bring the data from the HX system to Prometheus. This script crates a local web server on address http://localhost:8082/metrics that will serve the data that looks like this: 
 ```
