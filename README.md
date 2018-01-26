@@ -13,4 +13,4 @@ Lat_Write{host="10.127.253.81"} 6.261
 
 Every 1 min Prometheus calls the url and processes the data.
 
-Keywords: Cisco Hyperflex, API, python
+Keywords: Cisco Hyperflex, API, python.
