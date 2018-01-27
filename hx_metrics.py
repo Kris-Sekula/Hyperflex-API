@@ -1,17 +1,16 @@
 #!/usr/bin/env python2
-	
+
 from flask import Flask
 from flask import Response
 import requests
 import json
-import hx_creds
 import time
 from gevent.wsgi import WSGIServer
 #
 import logging
 import logging.handlers
 #
-
+import hx_creds
 '''
 the hx_creds.py looks like this:
 
@@ -46,7 +45,7 @@ def get_stats():
 			logger.info("Missing token, skipping host: "+host['host'])
 			continue
 		url = "https://"+host['host']
-		
+
                 # uri for throughput data with "last 5 min" filter
 		uri_MBps = '/render?target=stats.counters.scvmclient.allhosts.nfsBytesRead.cluster.rate&target=stats.counters.scvmclient.allhosts.nfsBytesWritten.cluster.rate&format=json&from=-5min'
 		# Get throughput data
@@ -55,7 +54,7 @@ def get_stats():
 			try:
 				MBps_Read=round(MBps_data[0]['datapoints'][-2][0],3)
                 		MBps_Write=round(MBps_data[1]['datapoints'][-2][0],3)
-			
+
 				# build the results
                 		results += 'MBps_Read{host="%s"} %s\n'%(host['host'],str(MBps_Read))
                 		results += 'MBps_Write{host="%s"} %s\n'%(host['host'],str(MBps_Write))
@@ -71,7 +70,7 @@ def get_stats():
 			try:
 				IOPS_Read=round(IOPS_data[0]['datapoints'][-2][0],3)
                 		IOPS_Write=round(IOPS_data[1]['datapoints'][-2][0],3)
-			
+
 				# build the results
  				results += 'IOPS_Read{host="%s"} %s\n'%(host['host'],str(IOPS_Read))
                 		results += 'IOPS_Write{host="%s"} %s\n'%(host['host'],str(IOPS_Write))
@@ -87,16 +86,16 @@ def get_stats():
 		if Lat_data:
 			try:
 				Lat_Read=round(Lat_data[0]['datapoints'][-2][0],3)
-                		Lat_Write=round(Lat_data[1]['datapoints'][-2][0],3)		
-			
-				# build the results			
+                		Lat_Write=round(Lat_data[1]['datapoints'][-2][0],3)
+
+				# build the results
 				results += 'Lat_Read{host="%s"} %s\n'%(host['host'],str(Lat_Read))
                 		results += 'Lat_Write{host="%s"} %s\n'%(host['host'],str(Lat_Write))
 			except:
 				logger.error("Couldn't parse returned latency data")
                                 pass
 		#
-		#  When processing data I'm taking one before last record ([-2]), as sometimes the last record is None	
+		#  When processing data I'm taking one before last record ([-2]), as sometimes the last record is None
 		#
 	# return the results to the caller
 	return Response(results, mimetype='text/plain')
@@ -105,7 +104,7 @@ def get_stats():
 # Returns Authentication token
 #
 def get_auth(host, username, password):
-	
+
 	logger.info("Trying to auth "+host)
 
 	global tokens
@@ -123,7 +122,7 @@ def get_auth(host, username, password):
 	if tokens.get(host):
                 # looks like we have token cached already
 		# let's check if it's valid
-		
+
 		payload = {
 			"access_token": tokens.get(host)['access_token'],
 			"scope": "READ",
@@ -136,10 +135,10 @@ def get_auth(host, username, password):
 			if response.status_code == 200:
 				logger.info("Re-using existing auth token")
                                 return tokens.get(host)
-                	logger.error("Failed to validate existing token "+response.content)        	
+                	logger.error("Failed to validate existing token "+response.content)
 		except Exception as e:
 			logger.error("Post for token validate failed \n"+str(e))
-	
+
 	# this happens if no cached token found, or existing token was invalid
 	url = 'https://%s/aaa/v1/auth?grant_type=password'%host
 	payload = {
@@ -180,9 +179,6 @@ def get_stats(authdata, url):
                 logger.error("Post for data failed \n"+str(e))
                 return None
 
-def date_txt(epoch):
-	return  time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(epoch))
-	
 if __name__ == '__main__':
 	print "Service Started"
 	# Enable logging
@@ -194,6 +190,6 @@ if __name__ == '__main__':
     	logger.addHandler(handler)
 	logger.info("-"*25)
     	logger.info("HX Stats script started")
-	
+
 	http_server = WSGIServer((server_IP, int(server_port)), app, log = logger)
 	http_server.serve_forever()
