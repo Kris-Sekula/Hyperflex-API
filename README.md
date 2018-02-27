@@ -15,6 +15,6 @@ Every 1 min Prometheus calls the url and processes the data.
 
 Here is an example of thos the graphs look like:
 
-![alt text](https://github.com/Kris-Sekula/Hyperflex-API/master/cl2018-stats-example.png "Graphana Dashboard")
+![alt text](https://github.com/Kris-Sekula/Hyperflex-API/blob/master/cl2018-stats-example.png "Graphana Dashboard")
 
 Keywords: Cisco Hyperflex, API, python.
