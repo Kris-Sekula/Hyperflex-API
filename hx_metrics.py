@@ -1,4 +1,5 @@
 #!/usr/bin/env python2
+# ver 1.1 CL2019
 
 from flask import Flask
 from flask import Response
@@ -16,6 +17,7 @@ import hx_creds
 the hx_creds.py looks like this:
 
 hosts=[{'host':'10.1.1.1', 'username':'local/root', 'password':'*******'},{'host':'10.1.1.2', 'username':'local/root', 'password':'****'}]
+
 
 '''
 #
@@ -40,6 +42,7 @@ app = Flask('HX Stats')
 def get_stats():
 	results =''
 	for host in hx_creds.hosts:
+		logger.info("----------- Processing Host: %s -----------"%host['host'])
 		# get auth token (either cached or new one)
 		authdata = get_auth(host['host'], host['username'], host['password'])
 		if not authdata:
@@ -55,11 +58,14 @@ def get_stats():
 			try:
 				MBps_Read=round(MBps_data[0]['datapoints'][-2][0],3)
                 		MBps_Write=round(MBps_data[1]['datapoints'][-2][0],3)
+				logger.info("Got MBps info")
 
 				# build the results
                 		results += 'MBps_Read{host="%s"} %s\n'%(host['host'],str(MBps_Read))
                 		results += 'MBps_Write{host="%s"} %s\n'%(host['host'],str(MBps_Write))
-			except:
+
+			except Exception as e:
+				logger.error(e)
 				logger.error("Couldn't parse returned throughput data")
 				pass
 
@@ -71,11 +77,14 @@ def get_stats():
 			try:
 				IOPS_Read=round(IOPS_data[0]['datapoints'][-2][0],3)
                 		IOPS_Write=round(IOPS_data[1]['datapoints'][-2][0],3)
+				logger.info("Got IOPS info")
 
 				# build the results
  				results += 'IOPS_Read{host="%s"} %s\n'%(host['host'],str(IOPS_Read))
                 		results += 'IOPS_Write{host="%s"} %s\n'%(host['host'],str(IOPS_Write))
-			except:
+			
+			except Exception as e:
+				logger.error(e)
 				logger.error("Couldn't parse returned IOPS data")
                                 pass
 
@@ -88,17 +97,21 @@ def get_stats():
 			try:
 				Lat_Read=round(Lat_data[0]['datapoints'][-2][0],3)
                 		Lat_Write=round(Lat_data[1]['datapoints'][-2][0],3)
-
+				logger.info("Got Latency info")
+	
 				# build the results
 				results += 'Lat_Read{host="%s"} %s\n'%(host['host'],str(Lat_Read))
                 		results += 'Lat_Write{host="%s"} %s\n'%(host['host'],str(Lat_Write))
-			except:
+
+			except Exception as e:
+				logger.error(e)
 				logger.error("Couldn't parse returned latency data")
                                 pass
 		#
 		#  When processing data I'm taking one before last record ([-2]), as sometimes the last record is None
 		#
 	# return the results to the caller
+		logger.info("----------- Finished -----------")
 	return Response(results, mimetype='text/plain')
 
 #
@@ -170,7 +183,7 @@ def get_stats(authdata, url):
 	logger.info("call for get_stats")
 	try:
 		headers = {'Authorization': authdata['token_type'] + ' ' + authdata['access_token'],'Connection':'close'}
-                response = requests.get(url,headers=headers,verify=False,timeout=4)
+		response = requests.get(url,headers=headers,verify=False,timeout=4)
 		if response.status_code == 200:
 			logger.info("Got data ok")
 			return response.json()
