@@ -133,8 +133,7 @@ Here is an example of thos the graphs look like:
    ```
    curl https://packages.grafana.com/gpg.key | sudo apt-key add -
    ```
-   * 
-   update apt:
+   * update apt:
    ```
    sudo apt-get update
    ```
