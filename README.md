@@ -54,7 +54,7 @@ Here is an example of thos the graphs look like:
 	sudo vim /etc/prometheus/prometheus.yml
 	```
 
-	```
+```yaml
 global:
   scrape_interval: 15s
 scrape_configs:
