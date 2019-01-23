@@ -20,21 +20,17 @@ Here is an example of thos the graphs look like:
 ## How to deploy.
 
 1. Install ubuntu server 16.04 64bit (I used: ubuntu-16.04.5-server-amd64.iso)
-	* Basic installation, only select OpenSSH from the package list, create a user.
+   * Basic installation, only select OpenSSH from the package list, create a user.
 2. Install Prometheus
-* create required user:
-'''
-sudo useradd -M -s /bin/fals prometheus
-'''
+   * create required user:
+     sudo useradd -M -s /bin/fals prometheus
 		
-* create required folders:
-'''
-sudo mkdir /etc/prometheus
-sudo mkdir /var/lib/prometheus
+   * create required folders:
+     sudo mkdir /etc/prometheus
+     sudo mkdir /var/lib/prometheus
 
-sudo chown prometheus:prometheus /etc/prometheus
-sudo chown prometheus:prometheus /var/lib/prometheus
-'''
+     sudo chown prometheus:prometheus /etc/prometheus
+     sudo chown prometheus:prometheus /var/lib/prometheus
 	
 * download and extract:
 	
