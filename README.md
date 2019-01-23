@@ -56,24 +56,24 @@ Here is an example of thos the graphs look like:
    **Note:** watch out for formatting this is YAML, no TABs allowed, use two spaces instead.
 
    ```yaml
-global:
-  scrape_interval: 15s
-scrape_configs:
-  - job_name: 'prometheus'
-    scrape_interval: 5s
-    static_configs:
-      - targets: ['localhost:9090']
-  - job_name: 'hx_metrics'
-    scrape_interval: 1m
-    static_configs:
-      - targets: ['localhost:8082']
-        labels:
-          service_name: hx_read_write_stats
+   global:
+     scrape_interval: 15s
+   scrape_configs:
+     - job_name: 'prometheus'
+       scrape_interval: 5s
+       static_configs:
+         - targets: ['localhost:9090']
+     - job_name: 'hx_metrics'
+       scrape_interval: 1m
+       static_configs:
+         - targets: ['localhost:8082']
+           labels:
+             service_name: hx_read_write_stats
    ```
    * try to start prometheus:
    ```
    sudo -u prometheus /usr/local/bin/prometheus --config.file /etc/prometheus/prometheus.yml --storage.tsdb.path /var/lib/prometheus --web.console.templates=/etc/prometheus/consoles --web.console.libraries=/etc/prometheus/console_libraries
-```
+   ```
    * verfiy if it works:
    
    http://localhost:9090/status
@@ -83,9 +83,9 @@ scrape_configs:
    CTRL+C
 	
    * create prometheus service:
-```
+   ```
    sudo vim /etc/systemd/system/prometheus.service
-```
+   ```
    File should looks like this:
 ```
 [Unit]
@@ -106,58 +106,58 @@ ExecStart=/usr/local/bin/prometheus \
 WantedBy=multi-user.target
 ```
    * reload services:
-```
+   ```
    sudo systemctl daemon-reload
-```
+   ```
    * start Prometheus using the following command:
-```
+   ```
    sudo systemctl start prometheus
-```
+   ```
    * check if Prometheus is running, check the service status.
-```
+   ```
    sudo systemctl status prometheus
-```
+   ```
    * enable service:
-```
+   ```
 	sudo systemctl enable prometheus
-```
+   ```
 3. Install Grafana
    * Add grafana sources to apt
-```
+   ```
    sudo vim /etc/apt/sources.list.d/grafana.list
-```
+   ```
    deb https://packages.grafana.com/oss/deb stable main
 
    * Add apt key:
-```
+   ```
    curl https://packages.grafana.com/gpg.key | sudo apt-key add -
-```
+   ```
    * 
    update apt:
-```
+   ```
    sudo apt-get update
-```
+   ```
    * Verify what is the install candiate:
-```
+   ```
    apt-cache policy grafana
-```
+   ```
    * Install grafana:
-```
+   ```
    sudo apt-get install grafana
-```
+   ```
    * Configure grafana to start automatically using systemd
-```
+   ```
    sudo /bin/systemctl daemon-reload
    sudo /bin/systemctl enable grafana-server
-```
+   ```
    * Start grafana-server by executing
-```
+   ```
    sudo /bin/systemctl start grafana-server
-```
+   ```
    * Verify if it's running:
-```
+   ```
    sudo systemctl status grafana-server
-```
+   ```
    * Login to gui via:
    http://<ip>:3000/login (user your <ip>, default port is 3000, username: admin password: admin)
 
