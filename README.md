@@ -39,52 +39,66 @@ Here is an example of thos the graphs look like:
 	
    * download and extract:
 	
-`curl -LO https://github.com/prometheus/prometheus/releases/download/v2.6.1/prometheus-2.6.1.linux-amd64.tar.gz`
-`tar xvf prometheus-2.6.1.linux-amd64.tar.gz`
+	`curl -LO https://github.com/prometheus/prometheus/releases/download/v2.6.1/prometheus-2.6.1.linux-amd64.tar.gz`
+	
+	`tar xvf prometheus-2.6.1.linux-amd64.tar.gz`
 			
    * copy files and change premissions:
-`sudo cp prometheus-2.6.1.linux-amd64/prometheus /usr/local/bin/`
-`sudo cp prometheus-2.6.1.linux-amd64/promtool /usr/local/bin/`
+	
+	`sudo cp prometheus-2.6.1.linux-amd64/prometheus /usr/local/bin/`
 
-`sudo chown prometheus:prometheus /usr/local/bin/prometheus`
-`sudo chown prometheus:prometheus /usr/local/bin/promtool`
+	`sudo cp prometheus-2.6.1.linux-amd64/promtool /usr/local/bin/`
 
-`sudo cp -r prometheus-2.6.1.linux-amd64/consoles /etc/prometheus`
-`sudo cp -r prometheus-2.6.1.linux-amd64/console_libraries /etc/prometheus`
+	`sudo chown prometheus:prometheus /usr/local/bin/prometheus`
 
-`sudo chown -R prometheus:prometheus /etc/prometheus/consoles`
-`sudo chown -R prometheus:prometheus /etc/prometheus/console_libraries`
+	`sudo chown prometheus:prometheus /usr/local/bin/promtool`
+
+	`sudo cp -r prometheus-2.6.1.linux-amd64/consoles /etc/prometheus`
+
+	`sudo cp -r prometheus-2.6.1.linux-amd64/console_libraries /etc/prometheus`
+
+	`sudo chown -R prometheus:prometheus /etc/prometheus/consoles`
+
+	`sudo chown -R prometheus:prometheus /etc/prometheus/console_libraries`
 		
    * configure prometheus: 
-`sudo vim /etc/prometheus/prometheus.yml`
+
+	`sudo vim /etc/prometheus/prometheus.yml`
 		
-      tab is two spaces, no other char allowed, watch for formatting
-      <file:prometheus.yml>
+	tab is two spaces, no other char allowed, watch for formatting
+	<file:prometheus.yml>
 		  
    * try to start prometheus:
-`sudo -u prometheus /usr/local/bin/prometheus --config.file /etc/prometheus/prometheus.yml --storage.tsdb.path /var/lib/prometheus --web.console.templates=/etc/prometheus/consoles --web.console.libraries=/etc/prometheus/console_libraries`
+	`sudo -u prometheus /usr/local/bin/prometheus --config.file /etc/prometheus/prometheus.yml --storage.tsdb.path /var/lib/prometheus --web.console.templates=/etc/prometheus/consoles --web.console.libraries=/etc/prometheus/console_libraries`
 		
    * verfiy if it works:
-     http://localhost:9090/status
+     
+	http://localhost:9090/status
 	
    * if all good stop it:
-     CTRL+C
+     
+	CTRL+C
 	
    * create prometheus service:
-`sudo vim /etc/systemd/system/prometheus.service`
-		<file:prometheus.service>
+	`sudo vim /etc/systemd/system/prometheus.service`
+	
+	<file:prometheus.service>
 	
    * reload services:
-`sudo systemctl daemon-reload`
+
+	`sudo systemctl daemon-reload`
 
    * start Prometheus using the following command:
-`sudo systemctl start prometheus`
+
+	`sudo systemctl start prometheus`
 
    * check if Prometheus is running, check the service.s status.
-`sudo systemctl status prometheus`
+	
+	`sudo systemctl status prometheus`
 	
    * enable service:
-`sudo systemctl enable prometheus`
+	
+	`sudo systemctl enable prometheus`
 		
 
 
