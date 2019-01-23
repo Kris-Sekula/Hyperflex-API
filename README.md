@@ -126,8 +126,9 @@ Here is an example of thos the graphs look like:
    ```
    sudo vim /etc/apt/sources.list.d/grafana.list
    ```
+   ```
    deb https://packages.grafana.com/oss/deb stable main
-
+   ```
    * Add apt key:
    ```
    curl https://packages.grafana.com/gpg.key | sudo apt-key add -
@@ -159,11 +160,15 @@ Here is an example of thos the graphs look like:
    sudo systemctl status grafana-server
    ```
    * Login to gui via:
+   
    http://<ip>:3000/login (user your <ip>, default port is 3000, username: admin password: admin)
 
    * Add prometheus as source:
+   
    Got to source and select, prometheus, http://localhost:9090, hit save and test
    
-   * import dashboard from file : HX-monitor-Grafana_normal.json
+   * import dashboard from file :
+   
+   HX-monitor-Grafana_normal.json
 
 Keywords: Cisco Hyperflex, API, python.
