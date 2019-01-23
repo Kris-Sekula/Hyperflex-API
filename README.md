@@ -27,21 +27,19 @@ Here is an example of thos the graphs look like:
    sudo useradd -M -s /bin/fals prometheus
    ```
    * create required folders:
-
-```
-  sudo mkdir /etc/prometheus
-  sudo mkdir /var/lib/prometheus
-  sudo chown prometheus:prometheus /etc/prometheus
-  sudo chown prometheus:prometheus /var/lib/prometheus
-```
+   ```
+   sudo mkdir /etc/prometheus
+   sudo mkdir /var/lib/prometheus
+   sudo chown prometheus:prometheus /etc/prometheus
+   sudo chown prometheus:prometheus /var/lib/prometheus
+   ```
    * download and extract:
-
-```
+   ```
    curl -LO https://github.com/prometheus/prometheus/releases/download/v2.6.1/prometheus-2.6.1.linux-amd64.tar.gz
    tar xvf prometheus-2.6.1.linux-amd64.tar.gz
-```
+   ```
    * copy files and change premissions:
-```
+   ```
    sudo cp prometheus-2.6.1.linux-amd64/prometheus /usr/local/bin/
    sudo cp prometheus-2.6.1.linux-amd64/promtool /usr/local/bin/
    sudo chown prometheus:prometheus /usr/local/bin/prometheus
@@ -50,14 +48,14 @@ Here is an example of thos the graphs look like:
    sudo cp -r prometheus-2.6.1.linux-amd64/console_libraries /etc/prometheus
    sudo chown -R prometheus:prometheus /etc/prometheus/consoles
    sudo chown -R prometheus:prometheus /etc/prometheus/console_libraries
-```
+   ```
    * configure prometheus:
-```
+   ```
    sudo vim /etc/prometheus/prometheus.yml
-```
+   ```
    **Note:** watch out for formatting this is YAML, no TABs allowed, use two spaces instead.
 
-```yaml
+   ```yaml
 global:
   scrape_interval: 15s
 scrape_configs:
@@ -71,9 +69,9 @@ scrape_configs:
       - targets: ['localhost:8082']
         labels:
           service_name: hx_read_write_stats
-```
+   ```
    * try to start prometheus:
-```
+   ```
    sudo -u prometheus /usr/local/bin/prometheus --config.file /etc/prometheus/prometheus.yml --storage.tsdb.path /var/lib/prometheus --web.console.templates=/etc/prometheus/consoles --web.console.libraries=/etc/prometheus/console_libraries
 ```
    * verfiy if it works:
