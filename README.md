@@ -54,10 +54,9 @@ Here is an example of thos the graphs look like:
 	sudo vim /etc/prometheus/prometheus.yml
 	```
 
-```
+	```
 global:
   scrape_interval: 15s
-
 scrape_configs:
   - job_name: 'prometheus'
     scrape_interval: 5s
@@ -69,7 +68,7 @@ scrape_configs:
       - targets: ['localhost:8082']
         labels:
           service_name: hx_read_write_stats
-```
+	```
 	**Note:** watch out for formatting this is YAML, no TABs allowed, use two spaces instead.
 
 	- try to start prometheus:
