@@ -53,42 +53,73 @@ Here is an example of thos the graphs look like:
 	```
 	sudo vim /etc/prometheus/prometheus.yml
 	```
-		
-	tab is two spaces, no other char allowed, watch for formatting
-	<file:prometheus.yml>
-		  
-   * try to start prometheus:
+	**watch out for formatting this is YAML, tab = two spaces**
+```
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'prometheus'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['localhost:9090']
+  - job_name: 'hx_metrics'
+    scrape_interval: 1m
+    static_configs:
+      - targets: ['localhost:8082']
+        labels:
+          service_name: hx_read_write_stats
+```		  
+	- try to start prometheus:
 ```
 	sudo -u prometheus /usr/local/bin/prometheus --config.file /etc/prometheus/prometheus.yml --storage.tsdb.path /var/lib/prometheus --web.console.templates=/etc/prometheus/consoles --web.console.libraries=/etc/prometheus/console_libraries
 ```
 		
-   * verfiy if it works:
+	- verfiy if it works:
      
-	http://localhost:9090/status
+		http://localhost:9090/status
 	
-   * if all good stop it:
+   	- if all good stop it:
      
-	CTRL+C
+		CTRL+C
 	
-   * create prometheus service:
+   	- create prometheus service:
 ```
 	sudo vim /etc/systemd/system/prometheus.service
 ```
-	<file:prometheus.service>
+	File should looks like this:
+```
+[Unit]
+Description=Prometheus
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User=prometheus
+Group=prometheus
+Type=simple
+ExecStart=/usr/local/bin/prometheus \
+	--config.file /etc/prometheus/prometheus.yml \
+	--storage.tsdb.path /var/lib/prometheus \
+	--web.console.templates=/etc/prometheus/consoles \
+	--web.console.libraries=/etc/prometheus/console_libraries
+[Install]
+WantedBy=multi-user.target
+``` 
 	
-   * reload services:
+	- reload services:
 ```
 	sudo systemctl daemon-reload
 ```
-   * start Prometheus using the following command:
+	- start Prometheus using the following command:
 ```
 	sudo systemctl start prometheus
 ```
-   * check if Prometheus is running, check the service.s status.
+	- check if Prometheus is running, check the service.s status.
 ```	
 	sudo systemctl status prometheus
 ```
-   * enable service:
+	- enable service:
 ```	
 	sudo systemctl enable prometheus
 ```	
