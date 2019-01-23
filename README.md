@@ -160,7 +160,7 @@ Here is an example of thos the graphs look like:
    ```
    * Login to gui via:
    
-   http://<ip>:3000/login (user your <ip>, default port is 3000, username: admin password: admin)
+   `http://<ip>:3000/login` (use your `<ip>`, default port is 3000, username: admin password: admin)
 
    * Add prometheus as source:
    
