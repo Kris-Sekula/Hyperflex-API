@@ -113,7 +113,7 @@ WantedBy=multi-user.target
 ```
    sudo systemctl start prometheus
 ```
-   * check if Prometheus is running, check the service.s status.
+   * check if Prometheus is running, check the service status.
 ```
    sudo systemctl status prometheus
 ```
@@ -121,6 +121,49 @@ WantedBy=multi-user.target
 ```
 	sudo systemctl enable prometheus
 ```
+3. Install Grafana
+   * Add grafana sources to apt
+```
+   sudo vim /etc/apt/sources.list.d/grafana.list
+```
+   deb https://packages.grafana.com/oss/deb stable main
 
+   * Add apt key:
+```
+   curl https://packages.grafana.com/gpg.key | sudo apt-key add -
+```
+   * 
+   update apt:
+```
+   sudo apt-get update
+```
+   * Verify what is the install candiate:
+```
+   apt-cache policy grafana
+```
+   * Install grafana:
+```
+   sudo apt-get install grafana
+```
+   * Configure grafana to start automatically using systemd
+```
+   sudo /bin/systemctl daemon-reload
+   sudo /bin/systemctl enable grafana-server
+```
+   * Start grafana-server by executing
+```
+   sudo /bin/systemctl start grafana-server
+```
+   * Verify if it's running:
+```
+   sudo systemctl status grafana-server
+```
+   * Login to gui via:
+   http://<ip>:3000/login (user your <ip>, default port is 3000, username: admin password: admin)
+
+   * Add prometheus as source:
+   Got to source and select, prometheus, http://localhost:9090, hit save and test
+   
+   * import dashboard from file : HX-monitor-Grafana_normal.json
 
 Keywords: Cisco Hyperflex, API, python.
