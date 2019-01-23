@@ -23,11 +23,11 @@ Here is an example of thos the graphs look like:
    * Basic installation, only select OpenSSH from the package list, create a user.
 2. Install Prometheus
    * create required user:
-`sudo useradd -M -s /bin/fals prometheus`
+`	sudo useradd -M -s /bin/fals prometheus`
 		
    * create required folders:
-`sudo mkdir /etc/prometheus`
-`sudo mkdir /var/lib/prometheus`
+`	sudo mkdir /etc/prometheus`
+`	sudo mkdir /var/lib/prometheus`
 
 `sudo chown prometheus:prometheus /etc/prometheus`
 `sudo chown prometheus:prometheus /var/lib/prometheus`
@@ -75,11 +75,11 @@ Here is an example of thos the graphs look like:
    * start Prometheus using the following command:
 `sudo systemctl start prometheus`
 
-	* check if Prometheus is running, check the service.s status.
-		sudo systemctl status prometheus
+   * check if Prometheus is running, check the service.s status.
+`sudo systemctl status prometheus`
 	
-	* enable service:
-		sudo systemctl enable prometheus
+   * enable service:
+`sudo systemctl enable prometheus`
 		
 
 
