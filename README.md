@@ -68,7 +68,8 @@ scrape_configs:
       - targets: ['localhost:8082']
         labels:
           service_name: hx_read_write_stats
-	```
+```
+
 	**Note:** watch out for formatting this is YAML, no TABs allowed, use two spaces instead.
 
 	- try to start prometheus:
