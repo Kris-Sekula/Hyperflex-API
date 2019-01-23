@@ -27,7 +27,7 @@ Here is an example of thos the graphs look like:
    * create required user:
 
 ```
-  sudo useradd -M -s /bin/fals prometheus
+   sudo useradd -M -s /bin/fals prometheus
 ```
    * create required folders:
 
