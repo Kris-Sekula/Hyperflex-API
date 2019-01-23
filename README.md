@@ -53,7 +53,7 @@ Here is an example of thos the graphs look like:
 	```
 	sudo vim /etc/prometheus/prometheus.yml
 	```
-	**Note:** watch out for formatting this is YAML, no TABs allowed, use two spaces instead.
+	  **Note:** watch out for formatting this is YAML, no TABs allowed, use two spaces instead.
 
 ```yaml
 global:
@@ -71,7 +71,7 @@ scrape_configs:
           service_name: hx_read_write_stats
 ```
 
-- try to start prometheus:
+	- try to start prometheus:
 
 	sudo -u prometheus /usr/local/bin/prometheus --config.file /etc/prometheus/prometheus.yml --storage.tsdb.path /var/lib/prometheus --web.console.templates=/etc/prometheus/consoles --web.console.libraries=/etc/prometheus/console_libraries
 
