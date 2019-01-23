@@ -49,11 +49,12 @@ Here is an example of thos the graphs look like:
 	sudo chown -R prometheus:prometheus /etc/prometheus/consoles
 	sudo chown -R prometheus:prometheus /etc/prometheus/console_libraries
 	```		
-	- configure prometheus: 
+	- configure prometheus:
 	```
 	sudo vim /etc/prometheus/prometheus.yml
 	```
-	**watch out for formatting this is YAML, tab = two spaces**
+	**Note** watch out for formatting this is YAML, not TABs, use two spaces
+
 ```
 global:
   scrape_interval: 15s
@@ -69,7 +70,8 @@ scrape_configs:
       - targets: ['localhost:8082']
         labels:
           service_name: hx_read_write_stats
-```		  
+```
+		  
 	- try to start prometheus:
 ```
 	sudo -u prometheus /usr/local/bin/prometheus --config.file /etc/prometheus/prometheus.yml --storage.tsdb.path /var/lib/prometheus --web.console.templates=/etc/prometheus/consoles --web.console.libraries=/etc/prometheus/console_libraries
