@@ -191,4 +191,10 @@ Here is an example of thos the graphs look like:
    ```
    * Logs are created in the same directory, you can watch them to see if prometheus is calling the script every 1 minute.
    
+   * If you don't see the graphs updating, verify you changed the ip addresses, passwords etc to match, also fetch the data manualy and see if it gets served by opening the url in your browser, replace the "localhost" with ip address of the server that is hosting your script/grafana/prometheus:
+   ```
+   http://localhost:8082/hx_metrics
+   ```
+   
+   **NOTE** This instruction is for testing purposes only, no attempt to make it "secure" has been made, use at your own risk.
 Keywords: Cisco Hyperflex, API, python.
