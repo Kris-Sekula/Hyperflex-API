@@ -177,7 +177,9 @@ Here is an example of thos the graphs look like:
    * Clone the repositry locally.
    `git clone https://github.com/Kris-Sekula/Hyperflex-API.git'
    * Create credentials file:
+   
    `vi hx_creds.py`
+   
    This is how the file should look like:
    ```
    hosts=[{'host':'ip_HX_Cluster_1', 'username':'local/root', 'password':'password_HX1'},{'host':'ip_HX_Cluster2', 'username':'local/root', 'password':'password_HX2'}]
