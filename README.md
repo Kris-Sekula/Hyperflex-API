@@ -53,7 +53,7 @@ Here is an example of thos the graphs look like:
    ```
    sudo vim /etc/prometheus/prometheus.yml
    ```
-   **Note:** watch out for formatting this is YAML, no TABs allowed, use two spaces instead.
+   **Note:** watch out for formatting this is YAML, no TABs allowed, use two spaces instead. The second 'localhost' below      tells prometheus to make a call to itself on port 8082 and open the /hx_metrics to fetch the data every one minute.
 
    ```yaml
    global:
@@ -173,7 +173,15 @@ Here is an example of thos the graphs look like:
    with our addresses. Once done sace and use to import new dshboard to Grafana.
 
 4. Install the script:
+
    * Clone the repositry locally.
    `git clone https://github.com/Kris-Sekula/Hyperflex-API.git'
-
+   * Create credentials file:
+   `vi hx_creds.py'
+   This is how the file should look like:
+   '''
+   hosts=[{'host':'ip_HX_Cluster_1', 'username':'local/root', 'password':'password_HX1'},{'host':'ip_HX_Cluster2', 'username':'local/root', 'pass
+word':'password_HX2'}]
+   ```
+   
 Keywords: Cisco Hyperflex, API, python.
