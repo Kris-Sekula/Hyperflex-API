@@ -19,111 +19,155 @@ Here is an example of thos the graphs look like:
 
 ## How to deploy.
 
-1. Install ubuntu server 16.04 64bit (I used: ubuntu-16.04.5-server-amd64.iso):
-	- Basic installation, only select OpenSSH from the package list, create a user.
+1. Install ubuntu server 16.04 64bit (I used: ubuntu-16.04.5-server-amd64.iso)
+    * Basic installation, only select OpenSSH from the package list, create a user.
 2. Install Prometheus:
-	- create required user:
-	```
-	sudo useradd -M -s /bin/fals prometheus
-	```		
-	-create required folders:
-	```
-	sudo mkdir /etc/prometheus
-	sudo mkdir /var/lib/prometheus
-	sudo chown prometheus:prometheus /etc/prometheus
-	sudo chown prometheus:prometheus /var/lib/prometheus
-	```	
-   	- download and extract:
-	```	
-	curl -LO https://github.com/prometheus/prometheus/releases/download/v2.6.1/prometheus-2.6.1.linux-amd64.tar.gz
-	tar xvf prometheus-2.6.1.linux-amd64.tar.gz
-	```		
-   	- copy files and change premissions:
-	```
-	sudo cp prometheus-2.6.1.linux-amd64/prometheus /usr/local/bin/
-	sudo cp prometheus-2.6.1.linux-amd64/promtool /usr/local/bin/
-	sudo chown prometheus:prometheus /usr/local/bin/prometheus
-	sudo chown prometheus:prometheus /usr/local/bin/promtool
-	sudo cp -r prometheus-2.6.1.linux-amd64/consoles /etc/prometheus
-	sudo cp -r prometheus-2.6.1.linux-amd64/console_libraries /etc/prometheus
-	sudo chown -R prometheus:prometheus /etc/prometheus/consoles
-	sudo chown -R prometheus:prometheus /etc/prometheus/console_libraries
-	```		
-	- configure prometheus:
-	```
-	sudo vim /etc/prometheus/prometheus.yml
-	```
-	  **Note:** watch out for formatting this is YAML, no TABs allowed, use two spaces instead.
+   * create required user:
+   ```
+   sudo useradd -M -s /bin/fals prometheus
+   ```
+   * create required folders:
+   ```
+   sudo mkdir /etc/prometheus
+   sudo mkdir /var/lib/prometheus
+   sudo chown prometheus:prometheus /etc/prometheus
+   sudo chown prometheus:prometheus /var/lib/prometheus
+   ```
+   * download and extract:
+   ```
+   curl -LO https://github.com/prometheus/prometheus/releases/download/v2.6.1/prometheus-2.6.1.linux-amd64.tar.gz
+   tar xvf prometheus-2.6.1.linux-amd64.tar.gz
+   ```
+   * copy files and change premissions:
+   ```
+   sudo cp prometheus-2.6.1.linux-amd64/prometheus /usr/local/bin/
+   sudo cp prometheus-2.6.1.linux-amd64/promtool /usr/local/bin/
+   sudo chown prometheus:prometheus /usr/local/bin/prometheus
+   sudo chown prometheus:prometheus /usr/local/bin/promtool
+   sudo cp -r prometheus-2.6.1.linux-amd64/consoles /etc/prometheus
+   sudo cp -r prometheus-2.6.1.linux-amd64/console_libraries /etc/prometheus
+   sudo chown -R prometheus:prometheus /etc/prometheus/consoles
+   sudo chown -R prometheus:prometheus /etc/prometheus/console_libraries
+   ```
+   * configure prometheus:
+   ```
+   sudo vim /etc/prometheus/prometheus.yml
+   ```
+   **Note:** watch out for formatting this is YAML, no TABs allowed, use two spaces instead.
 
-```yaml
-global:
-  scrape_interval: 15s
-scrape_configs:
-  - job_name: 'prometheus'
-    scrape_interval: 5s
-    static_configs:
-      - targets: ['localhost:9090']
-  - job_name: 'hx_metrics'
-    scrape_interval: 1m
-    static_configs:
-      - targets: ['localhost:8082']
-        labels:
-          service_name: hx_read_write_stats
-```
+   ```yaml
+   global:
+     scrape_interval: 15s
+   scrape_configs:
+     - job_name: 'prometheus'
+       scrape_interval: 5s
+       static_configs:
+         - targets: ['localhost:9090']
+     - job_name: 'hx_metrics'
+       scrape_interval: 1m
+       static_configs:
+         - targets: ['localhost:8082']
+           labels:
+             service_name: hx_read_write_stats
+   ```
+   * try to start prometheus:
+   ```
+   sudo -u prometheus /usr/local/bin/prometheus --config.file /etc/prometheus/prometheus.yml --storage.tsdb.path /var/lib/prometheus --web.console.templates=/etc/prometheus/consoles --web.console.libraries=/etc/prometheus/console_libraries
+   ```
+   * verfiy if it works:
+   
+   http://localhost:9090/status
 
-	- try to start prometheus:
-
-	sudo -u prometheus /usr/local/bin/prometheus --config.file /etc/prometheus/prometheus.yml --storage.tsdb.path /var/lib/prometheus --web.console.templates=/etc/prometheus/consoles --web.console.libraries=/etc/prometheus/console_libraries
-
-		
-	- verfiy if it works:
-     
-		http://localhost:9090/status
+   * if all good stop it:
+   
+   CTRL+C
 	
-   	- if all good stop it:
-     
-		CTRL+C
-	
-   	- create prometheus service:
-```
-	sudo vim /etc/systemd/system/prometheus.service
-```
-	File should looks like this:
-```
-[Unit]
-Description=Prometheus
-Wants=network-online.target
-After=network-online.target
+   * create prometheus service:
+   ```
+   sudo vim /etc/systemd/system/prometheus.service
+   ```
+   File should looks like this:
+   ```
+   [Unit]
+   Description=Prometheus
+   Wants=network-online.target
+   After=network-online.target
 
-[Service]
-User=prometheus
-Group=prometheus
-Type=simple
-ExecStart=/usr/local/bin/prometheus \
-	--config.file /etc/prometheus/prometheus.yml \
-	--storage.tsdb.path /var/lib/prometheus \
-	--web.console.templates=/etc/prometheus/consoles \
-	--web.console.libraries=/etc/prometheus/console_libraries
-[Install]
-WantedBy=multi-user.target
-``` 
-	
-	- reload services:
-```
-	sudo systemctl daemon-reload
-```
-	- start Prometheus using the following command:
-```
-	sudo systemctl start prometheus
-```
-	- check if Prometheus is running, check the service.s status.
-```	
-	sudo systemctl status prometheus
-```
-	- enable service:
-```	
+   [Service]
+   User=prometheus
+   Group=prometheus
+   Type=simple
+   ExecStart=/usr/local/bin/prometheus \
+      --config.file /etc/prometheus/prometheus.yml \
+      --storage.tsdb.path /var/lib/prometheus \
+      --web.console.templates=/etc/prometheus/consoles \
+      --web.console.libraries=/etc/prometheus/console_libraries
+   [Install]
+   WantedBy=multi-user.target
+   ```
+   * reload services:
+   ```
+   sudo systemctl daemon-reload
+   ```
+   * start Prometheus using the following command:
+   ```
+   sudo systemctl start prometheus
+   ```
+   * check if Prometheus is running, check the service status.
+   ```
+   sudo systemctl status prometheus
+   ```
+   * enable service:
+   ```
 	sudo systemctl enable prometheus
-```	
+   ```
+3. Install Grafana
+   * Add grafana sources to apt
+   ```
+   sudo vim /etc/apt/sources.list.d/grafana.list
+   ```
+   ```
+   deb https://packages.grafana.com/oss/deb stable main
+   ```
+   * Add apt key:
+   ```
+   curl https://packages.grafana.com/gpg.key | sudo apt-key add -
+   ```
+   * update apt:
+   ```
+   sudo apt-get update
+   ```
+   * Verify what is the install candiate:
+   ```
+   apt-cache policy grafana
+   ```
+   * Install grafana:
+   ```
+   sudo apt-get install grafana
+   ```
+   * Configure grafana to start automatically using systemd
+   ```
+   sudo /bin/systemctl daemon-reload
+   sudo /bin/systemctl enable grafana-server
+   ```
+   * Start grafana-server by executing
+   ```
+   sudo /bin/systemctl start grafana-server
+   ```
+   * Verify if it's running:
+   ```
+   sudo systemctl status grafana-server
+   ```
+   * Login to gui via:
+   
+   `http://<ip>:3000/login` (use your `<ip>`, default port is 3000, username: admin password: admin)
 
+   * Add prometheus as source:
+   
+   Got to source and select, prometheus, http://localhost:9090, hit save and test
+   
+   * import dashboard from file :
+   
+   HX-monitor-Grafana_normal.json
 
 Keywords: Cisco Hyperflex, API, python.
