@@ -1,0 +1,14 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'prometheus'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['localhost:9090']
+  - job_name: 'hx_metrics'
+    scrape_interval: 1m
+    static_configs:
+      - targets: ['localhost:8082']
+        labels:
+          service_name: hx_read_write_stats
