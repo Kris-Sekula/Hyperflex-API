@@ -1,6 +1,6 @@
 # Hyperflex-API
 
-This is an example of how to use Cisco Hyperflex API with python. I've been tasked with deploying multiple Hyperflex Clusters at Cisco Live 2018 in Barcelona. As part of that deployment I wanted to have a way to monitor performace of the system. The Hyperflex system has a built performace "screen" that can be accessed via the http://hx-controller/perf link but I wanted to have both of my systems data presented on one screen. 
+This is an example of how to use the Cisco Hyperflex API with python. I've been tasked with deploying multiple Hyperflex Clusters at Cisco Live 2018 in Barcelona. As part of that deployment, I wanted to have a way to monitor the performance of the system. The Hyperflex system has a built performance "screen" that can be accessed via the http://hx-controller_ip/perf link but I wanted to have both of my system's data presented on one screen. 
 
 I decided to use the "Prometheus" https://prometheus.io/ as backend, Grafana as frontend and a python script to bring the data from the HX systems to Prometheus. This script crates a local web server on address http://localhost:8082/metrics that will serve the data that looks like this: 
 ```
@@ -13,11 +13,11 @@ Lat_Write{host="10.127.253.81"} 6.261
 ```
 Every 1 min Prometheus calls the url and processes the data.
 
-Here is an example of thos the graphs look like:
+Here is an example of those the graphs look like:
 
 ![alt text](https://github.com/Kris-Sekula/Hyperflex-API/blob/master/cl2018-stats-example.png "Graphana Dashboard")
 
-## How to deploy.
+## How to deploy (last tested Jan 2019).
 
 1. Install ubuntu server 16.04 64bit (I used: ubuntu-16.04.5-server-amd64.iso)
     * Basic installation, only select OpenSSH from the package list, create a user.
@@ -162,15 +162,15 @@ Here is an example of thos the graphs look like:
    
    `http://<ip>:3000/login` (use your `<ip>`, default port is 3000, username: admin password: admin)
 
-   * Add prometheus as source:
+   * Add prometheus as a source:
    
    Got to source and select, prometheus, http://localhost:9090, hit save and test
    
    * import dashboard from file :
    
    use the provided HX-monitor-Grafana_normal.json file that has a preconfigured dashboard
-   you will need to opend this file first and replace the ip addresses that I've been using
-   with our addresses. Once done sace and use to import new dashboard to Grafana.
+   you will need to open this file first and replace the ip addresses that I've been using
+   with our addresses. Once done save and use it to import new dashboard into Grafana.
 
 4. Install the script:
    * Clone the repositry locally.
@@ -191,7 +191,7 @@ Here is an example of thos the graphs look like:
    ```
    * Logs are created in the same directory, you can watch them to see if prometheus is calling the script every 1 minute.
    
-   * If you don't see the graphs updating, verify you changed the ip addresses, passwords etc to match, also fetch the data manualy and see if it gets served by opening the url in your browser, replace the "localhost" with ip address of the server that is hosting your script/grafana/prometheus:
+   * If you don't see the graphs updating, verify you changed the ip addresses, passwords etc to match, also fetch the data manually and see if it gets served by opening the url in your browser, replace the "localhost" with ip address of the server that is hosting your script/grafana/prometheus:
    ```
    http://localhost:8082/hx_metrics
    ```
