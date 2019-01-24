@@ -17,7 +17,7 @@ Here is an example of those the graphs look like:
 
 ![alt text](https://github.com/Kris-Sekula/Hyperflex-API/blob/master/cl2018-stats-example.png "Graphana Dashboard")
 
-## How to deploy (last tested Jan 2019).
+## How to deploy (as of January 2019).
 
 1. Install ubuntu server 16.04 64bit (I used: ubuntu-16.04.5-server-amd64.iso)
     * Basic installation, only select OpenSSH from the package list, create a user.
@@ -53,7 +53,7 @@ Here is an example of those the graphs look like:
    ```
    sudo vim /etc/prometheus/prometheus.yml
    ```
-   **Note:** watch out for formatting this is YAML, no TABs allowed, use two spaces instead. The second 'localhost' below      tells prometheus to make a call http://localhost:8082/hx_metrics to fetch the data every one minute, the data is provided the python script running on prometheus server.
+   **Note:** watch out for formatting this is YAML, no TABs allowed, use two spaces instead. The second 'localhost' below      tells prometheus to make a call to http://localhost:8082/hx_metrics and fetch the data every one minute, the url is served by the python script running on the prometheus server.
 
    ```yaml
    global:
