@@ -173,21 +173,22 @@ Here is an example of thos the graphs look like:
    with our addresses. Once done sace and use to import new dashboard to Grafana.
 
 4. Install the script:
-
    * Clone the repositry locally.
-   `git clone https://github.com/Kris-Sekula/Hyperflex-API.git'
+   ```
+   git clone https://github.com/Kris-Sekula/Hyperflex-API.git'
+   ```
    * Create credentials file:
-   
-   `vi hx_creds.py`
-   
+   ```
+   vi hx_creds.py
+   ```
    This is how the file should look like:
    ```
    hosts=[{'host':'ip_HX_Cluster_1', 'username':'local/root', 'password':'password_HX1'},{'host':'ip_HX_Cluster2', 'username':'local/root', 'password':'password_HX2'}]
    ```
    * run the script:
-   
-   `python hx_metrics.py`
-   
+   ```
+   python hx_metrics.py
+   ```
    * Logs are created in the same directory, you can watch them to see if prometheus is calling the script every 1 minute.
    
 Keywords: Cisco Hyperflex, API, python.
