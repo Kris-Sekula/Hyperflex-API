@@ -168,6 +168,12 @@ Here is an example of thos the graphs look like:
    
    * import dashboard from file :
    
-   HX-monitor-Grafana_normal.json
+   use the provided HX-monitor-Grafana_normal.json file that has a preconfigured dashboard
+   you will need to opend this file first and replace the ip addresses that I've been using
+   with our addresses. Once done sace and use to import new dshboard to Grafana.
+
+4. Install the script:
+   * Clone the repositry locally.
+   `git clone https://github.com/Kris-Sekula/Hyperflex-API.git'
 
 Keywords: Cisco Hyperflex, API, python.
