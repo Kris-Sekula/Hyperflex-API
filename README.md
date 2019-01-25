@@ -168,9 +168,7 @@ Here is an example of those the graphs look like:
    
    * import dashboard from file :
    
-   use the provided HX-monitor-Grafana_normal.json file that has a preconfigured dashboard
-   you will need to open this file first and replace the ip addresses that I've been using
-   with our addresses. Once done save and use it to import new dashboard into Grafana.
+   use the provided [https://github.com/Kris-Sekula/Hyperflex-API/blob/master/HX-monitor-Grafana_normal.json] file that has a   preconfigured dashboard you will need to open this file first and replace the ip addresses that I've been using with our addresses. Once done save and use it to import new dashboard into Grafana.
 
 4. Install the script:
    * Clone the repositry locally.
