@@ -196,5 +196,8 @@ Here is an example of those the graphs look like:
    
    **NOTE** This instruction is for testing purposes only, no attempt to make it "secure" has been made, use at your own risk.
 
+If you found this helpful and you like the work I do, why not buy me a coffe, thanks ! :)
+
+[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/R6R52KGCD)
 
 Keywords: Cisco Hyperflex, API, python.
